@@ -49,7 +49,24 @@ class SettingActivity : AppCompatActivity() {
         alert.setPositiveButton("추가", object:DialogInterface.OnClickListener {
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 //val username = name.getText().toString()
-                MenuList.menu.add(input.text.toString())
+                var isOverrap=false
+                for (s in MenuList.menu)
+                {
+                    if(input.text.toString()==s)
+                    {
+                        isOverrap=true
+                    }
+                }
+
+                if(isOverrap)
+                {
+                    Toast.makeText(applicationContext,"이미 있는 메뉴입니다.",Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    MenuList.menu.add(input.text.toString())
+                    Toast.makeText(applicationContext,"메뉴가 추가되었습니다.",Toast.LENGTH_SHORT).show()
+                }
             }
         })
         alert.setNegativeButton("취소",object :DialogInterface.OnClickListener{
@@ -76,13 +93,35 @@ class SettingActivity : AppCompatActivity() {
         builder.setTitle("삭제할 항목을 선택하세요.")
                 .setPositiveButton("삭제",object :DialogInterface.OnClickListener{
                     override fun onClick(p0: DialogInterface?, p1: Int) {
+
+                        var isRemove=false
+                        for (b in isChecked)
+                        {
+                            if(b)
+                            {
+                                isRemove=true
+                                break
+                            }
+                        }
+
+                        var removeList=ArrayList<String>()
+
                         for(i in isChecked.indices)
                         {
                             if(isChecked[i])
-                                MenuList.menu.removeAt(i)
+                            {
+                                removeList.add(MenuList.menu[i])
+                            }
                         }
 
+                        for(r in removeList)
+                        {
+                            MenuList.menu.remove(r)
+                        }
+                        if(isRemove)
+                            Toast.makeText(applicationContext,"메뉴가 삭제되었습니다.",Toast.LENGTH_SHORT).show()
                     }
+
                 })
                 .setNegativeButton("취소", null)
                 .setMultiChoiceItems(cs, isChecked.toBooleanArray(), object :DialogInterface.OnMultiChoiceClickListener{
@@ -131,8 +170,8 @@ class SettingActivity : AppCompatActivity() {
         }
         catch (e: IOException)
         {
-            e.printStackTrace()
-        }
+        e.printStackTrace()
+    }
     }
 }
 

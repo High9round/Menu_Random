@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.BufferedReader
-import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
@@ -61,34 +60,27 @@ class MainActivity : AppCompatActivity() {
 
     fun getMenu()
     {
+        textView_result.text="배고프다"
         MenuList.menu.clear()
 
         val fileName="savedata"
 
-        var file= File(fileName)
-
-            try
-            {
-                var fis = openFileInput(fileName)
-                var isr = InputStreamReader(fis)
-
-                var bufferedReader = BufferedReader(isr)
-                bufferedReader.lineSequence().forEach {
-                    MenuList.menu.add(it)
-                }
-
-                Toast.makeText(this,"파일을 불러왔습니다.",Toast.LENGTH_SHORT).show()
-
-            }
-            catch (e:IOException)
-            {
-                e.printStackTrace()
+        try
+        {
+            var fis = openFileInput(fileName)
+            var isr = InputStreamReader(fis)
+            var bufferedReader = BufferedReader(isr)
+            bufferedReader.lineSequence().forEach {
+                MenuList.menu.add(it)
             }
 
+            Toast.makeText(this,"파일을 불러왔습니다.",Toast.LENGTH_SHORT).show()
 
-
-
-
+        }
+        catch (e:IOException)
+        {
+            e.printStackTrace()
+        }
     }
 
     fun rand(from: Int, to: Int) : Int {
