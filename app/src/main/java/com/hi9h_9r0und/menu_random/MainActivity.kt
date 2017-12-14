@@ -22,11 +22,20 @@ class MainActivity : AppCompatActivity() {
         getMenu()
 
         button_getMenu.setOnClickListener {
-            lateinit var strResult:String
+            var strResult=""
 
             if(MenuList.menu.size>0)
             {
-                strResult=MenuList.menu[rand(0,MenuList.menu.size)]
+                while(true)
+                {
+                    var result=MenuList.menu[rand(0,MenuList.menu.size)]
+                    if(strResult!=result)
+                    {
+                        strResult=result
+                        break
+                    }
+
+                }
             }
             else
             {
