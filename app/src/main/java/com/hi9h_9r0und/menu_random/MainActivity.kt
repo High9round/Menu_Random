@@ -12,42 +12,51 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
 
+
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         getMenu()
 
         button_getMenu.setOnClickListener {
-            var strResult=""
-
-            if(MenuList.menu.size>0)
-            {
-                while(true)
-                {
-                    var result=MenuList.menu[rand(0,MenuList.menu.size)]
-                    if(strResult!=result)
-                    {
-                        strResult=result
-                        break
-                    }
-
-                }
-            }
-            else
-            {
-                strResult="후보가 없어"
-            }
-
-            textView_result.text=strResult
+            showMenu()
         }
-
-
     }
 
+    fun showMenu()
+    {
+        button_getMenu.isEnabled=false
+
+        var strResult=""
+
+        if(MenuList.menu.size>0)
+        {
+
+            while(true)
+            {
+                var result=MenuList.menu[rand(0,MenuList.menu.size)]
+                if(strResult!=result)
+                {
+                    strResult=result
+                    break
+                }
+
+            }
+
+        }
+        else
+        {
+            strResult="후보가 없어"
+        }
+
+        textView_result.text=strResult
+        button_getMenu.isEnabled=true
+    }
+    //상단바 버튼 초기화 및 처리 관련
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         var inflater=menuInflater
@@ -67,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    //메뉴목록 불러오기
     fun getMenu()
     {
         textView_result.text="배고프다"
@@ -91,9 +101,11 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
+    //랜덤 처리
     fun rand(from: Int, to: Int) : Int {
         var random= Random()
         return random.nextInt(to - from) + from
     }
+
+
 }
